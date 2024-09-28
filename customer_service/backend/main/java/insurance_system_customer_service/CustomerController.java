@@ -26,20 +26,20 @@ public class CustomerController {
     private final BoardService boardService;
     private final ClaimService claimService;
 
-    @GetMapping("customer/login")
+    @GetMapping("/customer/login")
     public CustomerDTO login(CustomerDTO dto) {
         CustomerVO vo = customerService.login(dto.id, dto.password);
         if (vo == null) return null;
         return new CustomerDTO(vo.id, vo.password, vo.name, vo.birth, vo.gender, vo.occupational_hazard, vo.smoking);
     }
 
-    @PostMapping("contract/create_contract")
+    @PostMapping("/contract")
     public boolean createContract(@RequestBody ContractDTO dto) {
         ContractVO vo = new ContractVO(dto.id, dto.customer_id, dto.product_id, dto.premium);
         return contractService.createContract(vo);
     }
 
-    @GetMapping("contract/get_all_contract_by_customer_id")
+    @GetMapping("/contracts")
     public List<ContractDTO> getAllContractsByCustomerId(CustomerDTO dto) {
         List<ContractVO> contractVOs = contractService.getAllContractsByCustomerId(dto.id);
         List<ContractDTO> contractDTOs = new ArrayList<>();
@@ -52,13 +52,13 @@ public class CustomerController {
         return contractDTOs;
     }
 
-    @PostMapping("claim/create_claim")
+    @PostMapping("/claim")
     public boolean createClaim(@RequestBody ClaimDTO dto) {
         ClaimVO vo = new ClaimVO(dto.compensation, dto.contract_id, dto.description);
         return claimService.createClaim(vo);
     }
 
-    @GetMapping("product/get_all_products")
+    @GetMapping("/products")
     public List<ProductDTO> getAllProducts() {
         List<ProductVO> productVOs = productService.getAllProducts();
         List<ProductDTO> productDTOs = new ArrayList<>();
@@ -70,13 +70,13 @@ public class CustomerController {
         return productDTOs;
     }
 
-    @PostMapping("board/create_board")
+    @PostMapping("/board")
     public boolean createBoard(@RequestBody BoardDTO dto) {
         BoardVO vo = new BoardVO(dto.author, dto.title, dto.content);
         return boardService.createBoard(vo);
     }
 
-    @GetMapping("board/get_all_boards")
+    @GetMapping("/boards")
     public List<BoardDTO> getAllBoards() {
         List<BoardVO> boardVOs = boardService.getAllBoards();
         List<BoardDTO> boardDTOs = new ArrayList<>();
