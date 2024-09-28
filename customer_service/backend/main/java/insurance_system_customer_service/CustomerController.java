@@ -16,9 +16,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/customer-service")
 @CrossOrigin(origins = "*")
-public class CustomerController {
+public class CustomerController implements CustomerApi{
 
     private final CustomerService customerService;
     private final ContractService contractService;
@@ -26,20 +25,20 @@ public class CustomerController {
     private final BoardService boardService;
     private final ClaimService claimService;
 
-    @GetMapping("/customer/login")
+    @Override
     public CustomerDTO login(CustomerDTO dto) {
         CustomerVO vo = customerService.login(dto.id, dto.password);
         if (vo == null) return null;
         return new CustomerDTO(vo.id, vo.password, vo.name, vo.birth, vo.gender, vo.occupational_hazard, vo.smoking);
     }
 
-    @PostMapping("/contract")
-    public boolean createContract(@RequestBody ContractDTO dto) {
+    @Override
+    public void createContract(ContractDTO dto) {
         ContractVO vo = new ContractVO(dto.id, dto.customer_id, dto.product_id, dto.premium);
-        return contractService.createContract(vo);
+        contractService.createContract(vo);
     }
 
-    @GetMapping("/contracts")
+    @Override
     public List<ContractDTO> getAllContractsByCustomerId(CustomerDTO dto) {
         List<ContractVO> contractVOs = contractService.getAllContractsByCustomerId(dto.id);
         List<ContractDTO> contractDTOs = new ArrayList<>();
@@ -52,13 +51,13 @@ public class CustomerController {
         return contractDTOs;
     }
 
-    @PostMapping("/claim")
-    public boolean createClaim(@RequestBody ClaimDTO dto) {
+    @Override
+    public void createClaim(ClaimDTO dto) {
         ClaimVO vo = new ClaimVO(dto.compensation, dto.contract_id, dto.description);
-        return claimService.createClaim(vo);
+        claimService.createClaim(vo);
     }
 
-    @GetMapping("/products")
+    @Override
     public List<ProductDTO> getAllProducts() {
         List<ProductVO> productVOs = productService.getAllProducts();
         List<ProductDTO> productDTOs = new ArrayList<>();
@@ -70,13 +69,13 @@ public class CustomerController {
         return productDTOs;
     }
 
-    @PostMapping("/board")
-    public boolean createBoard(@RequestBody BoardDTO dto) {
+    @Override
+    public void createBoard(BoardDTO dto) {
         BoardVO vo = new BoardVO(dto.author, dto.title, dto.content);
-        return boardService.createBoard(vo);
+        boardService.createBoard(vo);
     }
 
-    @GetMapping("/boards")
+    @Override
     public List<BoardDTO> getAllBoards() {
         List<BoardVO> boardVOs = boardService.getAllBoards();
         List<BoardDTO> boardDTOs = new ArrayList<>();
