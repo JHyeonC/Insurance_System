@@ -1,0 +1,18 @@
+spring :
+  application:
+    name: employee-service
+  datasource:
+    url : jdbc:mysql://127.0.0.1:3306/insurance_system
+    username : root
+    password : 1234
+server:
+  port: 40045
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka

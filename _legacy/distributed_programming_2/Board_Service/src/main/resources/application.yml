@@ -1,0 +1,17 @@
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  datasource:
+    url: "jdbc:mysql://localhost:3306/insurance_system"
+    username: "root"
+    password: "1234"
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+server:
+  port: 40022
+

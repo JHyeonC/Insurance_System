@@ -1,0 +1,11 @@
+export const HOST = 'http://localhost:'
+export const GATEWAY_PORT = 40005;
+export const SERVICE_NAME = '/customer-service'
+export const ORIGIN = HOST + GATEWAY_PORT + SERVICE_NAME;
+export const MAPPING_POINT_CUSTOMER_LOGIN = ORIGIN + '/customer/login'
+export const MAPPING_POINT_CONTRACT_GET_ALL_CONTRACT_BY_CUSTOMER_ID = ORIGIN + '/contract/get_all_contract_by_customer_id';
+export const MAPPING_POINT_CLAIM_CREATE_CLAIM = ORIGIN + '/claim/create_claim';
+export const MAPPING_POINT_PRODUCT_GET_ALL_PRODUCTS = ORIGIN + '/product/get_all_products';
+export const MAPPING_POINT_CONTRACT_CREATE_CONTRACT = ORIGIN + '/contract/create_contract';
+export const MAPPING_POINT_BOARD_GET_ALL_BOARD = ORIGIN + '/board/get_all_boards';
+export const MAPPING_POINT_BOARD_CREATE_BOARD = ORIGIN + '/board/create_board';

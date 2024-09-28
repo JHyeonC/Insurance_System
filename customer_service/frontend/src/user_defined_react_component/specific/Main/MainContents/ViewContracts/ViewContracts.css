@@ -1,0 +1,21 @@
+.view_contract {
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    padding: 20px 80px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.view_contract table {
+    width: 100%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+}
+
+.view_contract th, td {
+    border: 1px solid #444444;
+    padding: 10px;
+}

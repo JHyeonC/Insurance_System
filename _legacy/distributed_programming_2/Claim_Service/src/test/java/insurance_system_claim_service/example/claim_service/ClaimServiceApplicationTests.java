@@ -1,0 +1,13 @@
+package insurance_system_claim_service.example.claim_service;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class ClaimServiceApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}

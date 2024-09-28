@@ -1,0 +1,39 @@
+import insurance_system_employee_service.service.vo.ClaimVO
+import insurance_system_employee_service.service.vo.Status
+import insurance_system_employee_service.jpa.product.ProductEntity
+import insurance_system_employee_service.jpa.board.BoardEntity
+
+rule "보상금이 0원이 아니면 REVIEWING 상태로 바꾼다"
+when
+    ClaimVO(compensation != 0)
+    $claim: ClaimVO()
+then
+    $claim.setStatus(Status.REVIEWING.toString());
+    update($claim);
+end
+
+rule "보상금이 0원이면 거절 상태로 바꾼다"
+when
+    ClaimVO(compensation == 0)
+    $claim: ClaimVO()
+then
+    $claim.setStatus(Status.REJECTED.toString());
+    update($claim);
+end
+
+rule "요율이 모두 결정되면 공개한다"
+when
+    ProductEntity(seniorRate !=-1 && maleRate != -1 && femaleRate != -1 && occupationHazardRate != -1 && smokingRate != -1)
+    $product: ProductEntity()
+then
+    $product.setReleased(1);
+end
+
+rule "답변자와 답변이 존재하면 답변해야 할 목록에서 내린다"
+when
+    BoardEntity(answer != null && answerer != null)
+    $board: BoardEntity()
+then
+    $board.setIs_answered(1);
+end
+

@@ -1,0 +1,49 @@
+import insurance_system_customer_service.service.vo.ContractVO;
+import insurance_system_customer_service.service.vo.EmployeeVO;
+import insurance_system_customer_service.jpa.customer.CustomerEntity;
+import insurance_system_customer_service.jpa.product.ProductEntity;
+import insurance_system_customer_service.jpa.claim.ClaimEntity;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map
+import insurance_system_customer_service.jpa.employee.EmployeeEntity;
+
+
+rule "고객의 정보에 따라 보험금을 결정한다"
+    when
+        $customer: CustomerEntity()
+        $product: ProductEntity()
+        $vo: ContractVO()
+    then
+        int premium = $product.getPremium();
+
+        if (2023 - Integer.parseInt($customer.getBirth().split("-")[0]) > 60) premium *= $product.getSenior_rate();
+        if ($customer.getGender() == 0) premium *= $product.getMale_rate();
+        if ($customer.getGender() == 1) premium *= $product.getFemale_rate();
+        if ($customer.getOccupationalHazard() == 1) premium *= $product.getOccupational_hazard_rate();
+        if ($customer.getSmoking() == 1) premium *= $product.getSmoking_rate();
+
+        $vo.setPremium(premium);
+    end
+
+rule "가장 업무가 적은 보상담당 직원에게 업무를 부여한다"
+    when
+        $departments: List()
+        $departmentCounting: Map()
+        $vo : EmployeeVO()
+    then
+        String employee = ((EmployeeEntity)$departments.get(0)).getId();
+        int min = Integer.MAX_VALUE;
+        for (Object obj : $departmentCounting.keySet()){
+            if(obj instanceof String){
+                String employeeId = (String) obj;
+                int count = (int) $departmentCounting.get(employeeId);
+                if(count < min){
+                    employee = employeeId;
+                    min = count;
+                }
+            }
+        }
+        $vo.setEmployee(employee);
+    end
+

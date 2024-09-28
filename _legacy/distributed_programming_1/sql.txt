@@ -1,0 +1,93 @@
+create database insurance_system;
+use insurance_system;
+
+create table if not exists customers
+(
+    id                        varchar(255) not null primary key,
+    password                  varchar(255) not null,
+    name                      varchar(255) not null,
+    birth                     varchar(100) not null,
+    gender                    tinyint(1)   not null,
+    occupational_hazard       tinyint(1)   not null,
+    smoking                   tinyint(1)   not null
+);
+
+create table if not exists employees
+(
+    id                        varchar(255) not null primary key,
+    password                  varchar(255) not null,
+    name                      varchar(255) not null,
+    gender                    tinyint(1)   not null,
+    department  enum ('MARKETING', 'INVESTIGATING', 'SUPPORTING', 'DEVELOPMENT', 'CONTRACT', 'UNDERWRITING') not null
+);
+
+create table if not exists products
+(
+    id                        varchar(255) not null primary key,
+    name                      varchar(255) not null,
+    premium                   int not null,
+    senior_rate               float null,
+    male_rate                 float null,
+    female_rate               float null,
+    occupational_hazard_rate  float null,
+    smoking_rate              float null,
+    released                  tinyint(1) not null
+);
+
+create table if not exists contracts
+(
+    customer_id               varchar(255) not null,
+    product_id                varchar(255) not null,
+    premium                   int not null,
+    primary key (customer_id, product_id),
+    foreign key (customer_id) references customers (id),
+    foreign key (product_id)  references products (id)
+);
+
+create table if not exists claims
+(
+    id           varchar(255) not null primary key,
+    compensation int null,
+    customer_id  varchar(255) not null,
+    product_id   varchar(255) not null,
+    date         varchar(100) not null,
+    description  text not null,
+    investigator varchar(255)                                                    not null,
+    report       varchar(255)                                                    null,
+    reviewer     varchar(255)                                                    null,
+    status       enum ('REPORTING', 'REVIEWING', 'ACCEPTED', 'REJECTED', 'PAID') not null,
+    foreign key (customer_id) references customers (id),
+    foreign key (product_id) references products (id),
+    foreign key (investigator) references employees (id)
+);
+
+create table if not exists boards
+(
+    id           varchar(255) not null primary key,
+    author       varchar(255) not null,
+    title        varchar(255) not null,
+    content      text         not null,
+    answer       varchar(255) null,
+    answerer     varchar(255) null,
+    is_answered  tinyint(1) not null,
+    foreign key (author) references customers (id)
+);
+
+insert into customers values('C001', '1234', '호준서', '1999-10-29', 0, 0, 0);
+insert into customers values('C002', '1234', '고양이', '1972-08-21', 0, 1, 1);
+insert into customers values('C003', '1234', '강아지', '1966-01-02', 1, 1, 1);
+insert into customers values('C004', '1234', '코끼리', '1994-09-29', 1, 0, 1);
+insert into customers values('C005', '1234', '기이린', '1990-11-09', 0, 1, 1);
+insert into customers values('C006', '1234', '햄스터', '2002-05-05', 1, 0, 0);
+insert into customers values('C007', '1234', '곰탱이', '1950-04-21', 0, 0, 1);
+
+insert into products values('P001', 'Health Care', 70000, 1.5, 1.0, 1.1, 1.8, 1.3, 1);
+insert into products values('P002', 'Teeth Care', 50000, 2.0, 1.0, 1.0, 1.2, 2.0, 1);
+insert into products values('P003', 'Cancer Care', 90000, 1.8, 1.0, 1.3, 1.2, 2.3, 1);
+
+insert into employees values('E001', '1234', '김개발', 1, 'DEVELOPMENT');
+insert into employees values('E002', '1234', '박요율', 1, 'UNDERWRITING');
+insert into employees values('E003', '1234', '최검토', 0, 'INVESTIGATING');
+insert into employees values('E004', '1234', '정분석', 1, 'INVESTIGATING');
+insert into employees values('E005', '1234', '강지원', 0, 'SUPPORTING');
+insert into employees values('E006', '1234', '조홍보', 0, 'MARKETING');
