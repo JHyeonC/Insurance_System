@@ -1,21 +1,28 @@
 package insurance_system_customer_service;
 
-import insurance_system_customer_service.dto.*;
-import insurance_system_customer_service.service.*;
-import insurance_system_customer_service.service.vo.*;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import insurance_system_customer_service.dto.BoardDTO;
+import insurance_system_customer_service.dto.ClaimDTO;
+import insurance_system_customer_service.dto.ContractDTO;
+import insurance_system_customer_service.dto.CustomerDTO;
+import insurance_system_customer_service.dto.ProductDTO;
+import insurance_system_customer_service.service.BoardService;
+import insurance_system_customer_service.service.ClaimService;
+import insurance_system_customer_service.service.ContractService;
+import insurance_system_customer_service.service.CustomerService;
+import insurance_system_customer_service.service.ProductService;
+import insurance_system_customer_service.service.vo.BoardVO;
+import insurance_system_customer_service.service.vo.ClaimVO;
+import insurance_system_customer_service.service.vo.ContractVO;
+import insurance_system_customer_service.service.vo.CustomerVO;
+import insurance_system_customer_service.service.vo.ProductVO;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 @CrossOrigin(origins = "*")
 public class CustomerController implements CustomerApi{
 
